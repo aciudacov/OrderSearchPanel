@@ -139,9 +139,9 @@
                 <div class="mb-3">
                     <label for="basic-url" class="form-label">Number of vehicles</label>
                     <div class="input-group">
-                        <input type="number" min="1" max="10" class="form-control" placeholder="Min"
+                        <input type="number" inputmode="numeric" min="1" max="10" class="form-control" placeholder="Min"
                             aria-label="Min number of vehicles" id="minVehicles">
-                        <input type="number" min="1" max="10" class="form-control" placeholder="Max"
+                        <input type="number" inputmode="numeric" min="1" max="10" class="form-control" placeholder="Max"
                             aria-label="Max number of vehicles" id="maxVehicles">
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                     <label for="minTotal" class="form-label">Minimal total payment</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" step="1" min="0" class="form-control text-center" aria-label="Amount (to the nearest dollar)" id="minTotal">
+                        <input type="number" inputmode="numeric" step="1" min="0" class="form-control text-center" aria-label="Amount (to the nearest dollar)" id="minTotal">
                         <span class="input-group-text">.00</span>
                     </div>
                 </div>
@@ -183,7 +183,7 @@
                     <label for="minPpm" class="form-label">Minimal rate per vehicle per mile</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" step="0.01" min="0" class="form-control text-center" aria-label="Amount (to the nearest dollar)" id="minPpm">
+                        <input type="number" inputmode="decimal" step="0.01" min="0" class="form-control text-center" aria-label="Amount (to the nearest dollar)" id="minPpm">
                     </div>
                 </div>
             </div>
