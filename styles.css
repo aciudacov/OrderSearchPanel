@@ -1,0 +1,35 @@
+#map {
+    height: 90%;
+}
+
+html,
+body {
+    height: 98%;
+    margin: 0;
+    padding: 0;
+}
+
+#infowindow-content .title {
+    font-weight: bold;
+}
+
+#infowindow-content {
+    display: none;
+}
+
+#map #infowindow-content {
+    display: inline;
+}
+
+.pac-item, .pac-item-query {
+    color: #adb5bd;
+}
+
+.pac-item:hover{
+    background-color: #5f6a74;
+}
+
+.pac-container {
+    background-color: #2b3035;
+    z-index: 1050;
+}
