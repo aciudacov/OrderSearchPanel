@@ -1,3 +1,15 @@
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        var html = document.getElementsByTagName('html');
+        html[0].setAttribute('data-bs-theme', 'dark');
+    }
+    else
+    {
+        var html = document.getElementsByTagName('html');
+        html[0].setAttribute('data-bs-theme', 'light');
+    }
+});
+
 window.onload = (event) => {
     addEventListenerToAddButton();
     addEventListenerToPostRange();
