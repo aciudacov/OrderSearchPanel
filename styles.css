@@ -33,3 +33,11 @@ body {
     background-color: #2b3035;
     z-index: 1050;
 }
+
+.filter-button{
+    position: absolute;
+    left: 3%;
+    top: 5%;
+    width: 50px;
+    height: 50px;
+}

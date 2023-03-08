@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -8,6 +8,7 @@
     <link href="./styles.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
 
@@ -15,17 +16,17 @@
     <script src="./onload.js"></script>
     <script src="./map.js"></script>
     <div class="container-sm border rounded text-center pb-3 mt-3">
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#searchFilters"
-            aria-controls="searchFilters">Open filters</button>
-
+        <button class="btn btn-primary filter-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#searchFilters"
+            aria-controls="searchFilters"><i class="bi bi-funnel"></i></button>
+        <!--body contents-->
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="searchFilters"
             aria-labelledby="offcanvasWithBothOptionsLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Serach filters</h5>
+                <button type="button" class="btn btn-primary">Apply filters</button>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-
                 <div class="input-group mb-1">
                     <input type="text" aria-label="Location input" class="form-control" id="locationInput"
                         placeholder="Location">
@@ -174,7 +175,8 @@
                     <label for="minTotal" class="form-label">Minimal total payment</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" inputmode="numeric" step="1" min="0" class="form-control text-center" aria-label="Amount (to the nearest dollar)" id="minTotal">
+                        <input type="number" inputmode="numeric" step="1" min="0" class="form-control text-center"
+                            aria-label="Amount (to the nearest dollar)" id="minTotal">
                         <span class="input-group-text">.00</span>
                     </div>
                 </div>
@@ -183,7 +185,8 @@
                     <label for="minPpm" class="form-label">Minimal rate per vehicle per mile</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" inputmode="decimal" step="0.01" min="0" class="form-control text-center" aria-label="Amount (to the nearest dollar)" id="minPpm">
+                        <input type="number" inputmode="decimal" step="0.01" min="0" class="form-control text-center"
+                            aria-label="Amount (to the nearest dollar)" id="minPpm">
                     </div>
                 </div>
             </div>
