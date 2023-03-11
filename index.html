@@ -53,7 +53,6 @@
                             </button>
                             Vehicles: 1
                         </li>
-
                         <li class="list-group-item">Trailer type: Open</li>
                     </ul>
                 </div>
@@ -136,65 +135,63 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
-                                aria-controls="panelsStayOpen-collapseOne">
+                                data-bs-target="#vehicleTypesDropdown" aria-expanded="false"
+                                aria-controls="vehicleTypesDropdown">
                                 Vehicle types
                             </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
+                        <div id="vehicleTypesDropdown" class="accordion-collapse collapse"
                             aria-labelledby="panelsStayOpen-headingOne">
                             <div class="accordion-body text-start">
                                 <div class="row row-cols-2">
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="atvCheck" value="option1">
+                                        <input class="form-check-input" type="checkbox" id="atvCheck" value="atv">
                                         <label class="form-check-label" for="atvCheck">ATV</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="boatCheck" value="option2">
+                                        <input class="form-check-input" type="checkbox" id="boatCheck" value="boat">
                                         <label class="form-check-label" for="boatCheck">Boat</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="carCheck" value="option1">
+                                        <input class="form-check-input" type="checkbox" id="carCheck" value="car">
                                         <label class="form-check-label" for="carCheck">Car</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="heavyCheck" value="option2">
+                                        <input class="form-check-input" type="checkbox" id="heavyCheck" value="heavy">
                                         <label class="form-check-label" for="heavyCheck">Heavy
                                             equipment</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="yachtCheck" value="option1">
+                                        <input class="form-check-input" type="checkbox" id="yachtCheck" value="yacht">
                                         <label class="form-check-label" for="yachtCheck">Large yacht</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="motorcycleCheck"
-                                            value="option2">
+                                        <input class="form-check-input" type="checkbox" id="motorcycleCheck" value="motorcycle">
                                         <label class="form-check-label" for="motorcycleCheck">Motorcycle</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="pickupCheck"
-                                            value="option1">
+                                        <input class="form-check-input" type="checkbox" id="pickupCheck" value="pickup">
                                         <label class="form-check-label" for="pickupCheck">Pickup</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="rvCheck" value="option1">
+                                        <input class="form-check-input" type="checkbox" id="rvCheck" value="rv">
                                         <label class="form-check-label" for="rvCheck">RV</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="suvCheck" value="option2">
+                                        <input class="form-check-input" type="checkbox" id="suvCheck" value="suv">
                                         <label class="form-check-label" for="suvCheck">SUV</label>
                                     </div>
                                     <div class="col">
                                         <input class="form-check-input" type="checkbox" id="trailerCheck"
-                                            value="option1">
+                                            value="trailer">
                                         <label class="form-check-label" for="trailerCheck">Travel trailer</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="vanCheck" value="option2">
+                                        <input class="form-check-input" type="checkbox" id="vanCheck" value="var">
                                         <label class="form-check-label" for="vanCheck">Van</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="otherCheck" value="option2">
+                                        <input class="form-check-input" type="checkbox" id="otherCheck" value="other">
                                         <label class="form-check-label" for="otherCheck">Other</label>
                                     </div>
                                 </div>
@@ -205,17 +202,17 @@
                 <hr>
                 <label for="trailerType" class="form-label">Trailer type</label>
                 <select class="form-select" aria-label="Trailer type dropdown" id="trailerType">
-                    <option selected>All</option>
-                    <option value="1">Open</option>
-                    <option value="2">Enclosed</option>
-                    <option value="3">Driveaway</option>
+                    <option selected value="all">All</option>
+                    <option value="open">Open</option>
+                    <option value="enclosed">Enclosed</option>
+                    <option value="driveaway">Driveaway</option>
                 </select>
                 <hr>
                 <label for="vehicleStatus" class="form-label">Vehicle status</label>
                 <select class="form-select" aria-label="Vehicle status dropdown" id="vehicleStatus">
-                    <option selected>All</option>
-                    <option value="1">Operable</option>
-                    <option value="2">Inoperable</option>
+                    <option selected value="all">All</option>
+                    <option value="operable">Operable</option>
+                    <option value="inoperable">Inoperable</option>
                 </select>
                 <hr>
                 <div class="mb-3">
