@@ -204,6 +204,42 @@ async function sendPayload() {
     }
 }
 
+function addVehicleStatusBadge(state){
+    if (state)
+    {
+        return '<span class="badge text-bg-danger">INOP</span>';
+    }
+    else
+    {
+        return '<span class="badge text-bg-success">OP</span>';
+    }
+}
+
+function getDateFromUtc(datetime){
+    if (datetime)
+    {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        var date = new Date(datetime);
+        return date.toLocaleDateString(undefined, options);
+    }
+    else
+    {
+        return 'unspecified';
+    }
+}
+
+function populateVehiclesModal(vehicles){
+    var resultList = '';
+    vehicles.forEach(veh =>{
+        resultList += `<ul class="list-group">
+                            <li class="list-group-item">${veh.make} ${veh.model}</li>
+                            <li class="list-group-item">Dimensions: Unspecified</li>
+                            <li class="list-group-item">Weight: Unspecified</li>
+                        </ul>`;
+    });
+    return resultList;
+}
+
 function PopulateResults(responseObj) {
     let resultsContainer = document.getElementById('resultsContainer');
     resultsContainer.innerHTML = '';
@@ -239,30 +275,25 @@ function PopulateResults(responseObj) {
                         <li class="list-group-item">Miles: ${el.distance}mi</li>
                         <li class="list-group-item">
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                                data-bs-target="#modal${el.id}">
                                 <i class="bi bi-info-circle"></i>
                             </button>
-                            Vehicles: ${el.vehicles.length}
+                            Vehicles: ${el.vehicles.length} ${addVehicleStatusBadge(el.hasInOpVehicle)}
                         </li>
                         <li class="list-group-item">Trailer type: ${el.trailerType}</li>
                     </ul>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="modal${el.id}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Vehicle info</h1>
+                                <h1 class="modal-title fs-5" >Vehicle(s) info</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item">2005 Full_load Flat_bed</li>
-                                    <li class="list-group-item">Dimensions: Unspecified</li>
-                                    <li class="list-group-item">Weight: Unspecified</li>
-                                </ul>
+                                ${populateVehiclesModal(el.vehicles)}
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -281,10 +312,10 @@ function PopulateResults(responseObj) {
                 </div>
                 <div class="col-sm p-1">
                     <ul class="list-group">
-                        <li class="list-group-item">Posted at: ${el.createdDate}</li>
-                        <li class="list-group-item">Ship at: ${el.availableDate}</li>
-                        <li class="list-group-item">Desired: ${el.desiredDeliveryDate}</li>
-                        <li class="list-group-item">Expire: ${el.expirationDate}</li>
+                        <li class="list-group-item">Posted at: ${getDateFromUtc(el.createdDate)}</li>
+                        <li class="list-group-item">Ship at: ${getDateFromUtc(el.availableDate)}</li>
+                        <li class="list-group-item">Desired: ${getDateFromUtc(el.desiredDeliveryDate)}</li>
+                        <li class="list-group-item">Expire: ${getDateFromUtc(el.expirationDate)}</li>
                         <li class="list-group-item">Order ID: ${el.shipperOrderId}</li>
                     </ul>
                 </div>
