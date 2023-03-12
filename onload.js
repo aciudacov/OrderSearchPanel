@@ -46,10 +46,7 @@ function getPayloadData() {
     }));
     let postRange = document.getElementById('postRange').value;
     let vehicleTypes = Array.from(document.querySelectorAll('#vehicleTypesDropdown input:checked')).map(c => c.value);
-
-    let trailerTypeValue = document.getElementById('trailerType').value;
-    let trailerType = trailerTypeValue == 'all' ? [] : trailerTypeValue;
-
+    let trailerType = document.getElementById('trailerType').value;
     let vehicleStatus = document.getElementById('vehicleStatus').value;
     let minVehicles = document.getElementById('minVehicles').value;
     let maxVehicles = document.getElementById('maxVehicles').value;
