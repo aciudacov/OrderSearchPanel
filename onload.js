@@ -186,18 +186,25 @@ async function sendPayload() {
     console.log(payload);
     let spinner = document.getElementById('spinner');
     spinner.classList.remove('d-none');
-    await postData(apiUrl, payload).then((data) => {
-        spinner.classList.add('d-none');
-        if (data.count != 0)
-        {
-            PopulateResults(data);
-        }
-        else
-        {
-            const tokenModal = new bootstrap.Modal('#emptyResultsModal');
-            tokenModal.show();
-        }
-    });
+    try
+    {
+        await postData(apiUrl, payload).then((data) => {
+            spinner.classList.add('d-none');
+            if (data.count != 0)
+            {
+                PopulateResults(data);
+            }
+            else
+            {
+                const tokenModal = new bootstrap.Modal('#emptyResultsModal');
+                tokenModal.show();
+            }
+        });
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
 }
 
 function PopulateResults(responseObj) {
