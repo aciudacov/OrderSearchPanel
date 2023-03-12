@@ -18,28 +18,32 @@
 <body>
     <script src="./onload.js" defer></script>
     <script src="./map.js"></script>
-    <div class="container-sm border rounded text-center mt-2">
-        <button class="btn btn-primary filter-button" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#searchFilters" aria-controls="searchFilters"><i class="bi bi-funnel"></i></button>
+    <button class="btn btn-primary filter-button" type="button" onclick="showFilters()"><i class="bi bi-funnel"></i></button>
+    <div class="position-absolute top-50 start-50 transform-middle d-none" id="spinner">
+        <div class="spinner-border text-primary" role="status">
+        </div>
+    </div>
+    <div class="container-sm border rounded text-center mt-2" id="resultsContainer">
         <!--body contents-->
         <div class="card mt-2 mb-2">
             <div class="card-body row">
                 <div class="col-sm">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="https://www.google.com/maps?q=36.026391,-81.933475&ll=36.026391,-81.933475&z=10" class="btn btn-secondary btn-sm" target="_blank"><i
-                                    class="bi bi-geo-alt"></i></a>
+                            <a href="https://www.google.com/maps?q=36.026391,-81.933475&ll=36.026391,-81.933475&z=10"
+                                class="btn btn-secondary btn-sm" target="_blank"><i class="bi bi-geo-alt"></i></a>
                             <span>Pickup:</span>
                             <span>NC, Newland, 28657</span>
                         </li>
                         <li class="list-group-item">
-                            <a href="https://www.google.com/maps?q=38.54388,-122.810608&ll=38.54388,-122.810608&z=10" class="btn btn-secondary btn-sm" target="_blank"><i
-                                    class="bi bi-geo-alt"></i></a>
+                            <a href="https://www.google.com/maps?q=38.54388,-122.810608&ll=38.54388,-122.810608&z=10"
+                                class="btn btn-secondary btn-sm" target="_blank"><i class="bi bi-geo-alt"></i></a>
                             <span>Delivery:</span>
                             <span>CA, Windsor, 95492</span>
                         </li>
                         <li class="list-group-item">
-                            <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=Newland,%20NC,%2028657&destination=Windsor,%20CA,%2095492" class="btn btn-primary btn-sm" target="_blank">View route</a>
+                            <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=Newland,%20NC,%2028657&destination=Windsor,%20CA,%2095492"
+                                class="btn btn-primary btn-sm" target="_blank">View route</a>
                         </li>
                         <li class="list-group-item">Additional info: https://shipez.us/nvSPK</li>
                     </ul>
@@ -102,11 +106,13 @@
                 </div>
             </div>
         </div>
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="searchFilters"
+    </div>
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="searchFilters"
             aria-labelledby="offcanvasWithBothOptionsLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Search filters</h5>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas">Apply</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="sendPayload()">Apply</button>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -148,53 +154,56 @@
                             <div class="accordion-body text-start">
                                 <div class="row row-cols-2">
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="atvCheck" value="atv">
+                                        <input class="form-check-input" type="checkbox" id="atvCheck" value="ATV">
                                         <label class="form-check-label" for="atvCheck">ATV</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="boatCheck" value="boat">
+                                        <input class="form-check-input" type="checkbox" id="boatCheck" value="Boat">
                                         <label class="form-check-label" for="boatCheck">Boat</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="carCheck" value="car">
+                                        <input class="form-check-input" type="checkbox" id="carCheck" value="Car">
                                         <label class="form-check-label" for="carCheck">Car</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="heavyCheck" value="heavy">
+                                        <input class="form-check-input" type="checkbox" id="heavyCheck"
+                                            value="Heavy_Equipment">
                                         <label class="form-check-label" for="heavyCheck">Heavy
                                             equipment</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="yachtCheck" value="yacht">
+                                        <input class="form-check-input" type="checkbox" id="yachtCheck"
+                                            value="Large_Yacht">
                                         <label class="form-check-label" for="yachtCheck">Large yacht</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="motorcycleCheck" value="motorcycle">
+                                        <input class="form-check-input" type="checkbox" id="motorcycleCheck"
+                                            value="Motorcycle">
                                         <label class="form-check-label" for="motorcycleCheck">Motorcycle</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="pickupCheck" value="pickup">
+                                        <input class="form-check-input" type="checkbox" id="pickupCheck" value="Pickup">
                                         <label class="form-check-label" for="pickupCheck">Pickup</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="rvCheck" value="rv">
+                                        <input class="form-check-input" type="checkbox" id="rvCheck" value="RV">
                                         <label class="form-check-label" for="rvCheck">RV</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="suvCheck" value="suv">
+                                        <input class="form-check-input" type="checkbox" id="suvCheck" value="SUV">
                                         <label class="form-check-label" for="suvCheck">SUV</label>
                                     </div>
                                     <div class="col">
                                         <input class="form-check-input" type="checkbox" id="trailerCheck"
-                                            value="trailer">
+                                            value="Travel_Trailer">
                                         <label class="form-check-label" for="trailerCheck">Travel trailer</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="vanCheck" value="var">
+                                        <input class="form-check-input" type="checkbox" id="vanCheck" value="Van">
                                         <label class="form-check-label" for="vanCheck">Van</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-check-input" type="checkbox" id="otherCheck" value="other">
+                                        <input class="form-check-input" type="checkbox" id="otherCheck" value="Other">
                                         <label class="form-check-label" for="otherCheck">Other</label>
                                     </div>
                                 </div>
@@ -206,16 +215,16 @@
                 <label for="trailerType" class="form-label">Trailer type</label>
                 <select class="form-select" aria-label="Trailer type dropdown" id="trailerType">
                     <option selected value="all">All</option>
-                    <option value="open">Open</option>
-                    <option value="enclosed">Enclosed</option>
-                    <option value="driveaway">Driveaway</option>
+                    <option value="OPEN">Open</option>
+                    <option value="ENCLOSED">Enclosed</option>
+                    <option value="DRIVEAWAY">Driveaway</option>
                 </select>
                 <hr>
                 <label for="vehicleStatus" class="form-label">Vehicle status</label>
                 <select class="form-select" aria-label="Vehicle status dropdown" id="vehicleStatus">
                     <option selected value="all">All</option>
-                    <option value="operable">Operable</option>
-                    <option value="inoperable">Inoperable</option>
+                    <option value="operableonly">Operable</option>
+                    <option value="hasinoperable">Inoperable</option>
                 </select>
                 <hr>
                 <div class="mb-3">
@@ -228,28 +237,15 @@
                     </div>
                 </div>
                 <hr>
-                <label for="readyToShip" class="form-label">Ready to ship within</label>
-                <select class="form-select" aria-label="Ready to ship within dropdown" id="readyToShip">
-                    <option selected>All</option>
-                    <option value="0">Today</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="10">10</option>
-                    <option value="14">14</option>
-                    <option value="30">30</option>
-                    <option value="60">60</option>
-                </select>
+                <label for="readyToShip" class="form-label">Ready to ship within <span id="readyToShipText">any
+                        time</span></label>
+                <input type="range" class="form-range" id="readyToShip" min="-1" max="60" step="1" value="-1">
                 <hr>
                 <label for="paymentType" class="form-label">Payment type</label>
                 <select class="form-select" aria-label="Payment type dropdown" id="paymentType">
-                    <option selected>All</option>
-                    <option value="1">COD/COP</option>
-                    <option value="2">COD/COP/Quickpay/Comcheck</option>
+                    <option selected value="all">All</option>
+                    <option value="COD_COP">COD/COP</option>
+                    <option value="COD_COP_QUICKPAY_COMCHEK">COD/COP/Quickpay/Comcheck</option>
                 </select>
                 <hr>
                 <div class="mb-3">
@@ -272,25 +268,58 @@
                 </div>
             </div>
         </div>
-    </div>
     <div class="modal fade" id="tokenModal" tabindex="-1" aria-labelledby="tokenModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="tokenModalLabel">Please enter your token below</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="tokenModalLabel">Please enter your token below</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="tokenInput" class="form-control" placeholder="Paste your token here">
+                    <label for="tokenInput" class="form-label">Get token from bot with command /token</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveToken()" - data-bs-dismiss="modal">Save
+                        changes</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <input type="text" id="tokenInput" class="form-control" placeholder="Paste your token here">
-              <label for="tokenInput" class="form-label">Get token from bot with command /token</label>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onclick="saveToken()"- data-bs-dismiss="modal">Save changes</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="errorModalLabel">An error happened</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">There was an error while processing your request. If the problem persists,
+                        please contact administrator.</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="emptyResultsModal" tabindex="-1" aria-labelledby="emptyResultsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="emptyResultsModalLabel">No results</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Your search did not yield any results. Try changing or removing some filters.</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKsYTgi8DCDNpplXRcWfp5tLI4GBcHaRg&region=US&language=en&callback=initMap&libraries=places&v=weekly"
         defer></script>
