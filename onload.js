@@ -253,12 +253,19 @@ function populateVehiclesModal(vehicles){
     let resultList = '';
     vehicles.forEach(veh =>{
         resultList += `<ul class="list-group">
-                            <li class="list-group-item">${veh.make} ${veh.model} ${veh.year}</li>
-                            <li class="list-group-item">Dimensions: Unspecified</li>
-                            <li class="list-group-item">Weight: Unspecified</li>
+                            <li class="list-group-item"><span>${veh.make} ${veh.model} ${veh.year}</span>${populateVehicleSpecs(veh.shippingSpecs)}</li>
                         </ul>`;
     });
     return resultList;
+}
+
+function populateVehicleSpecs(specs){
+    if (specs){
+        return `<span class="ml-3">${specs.weight}lbs</span><span class="ms-3">${specs.length}" L x ${specs.width}" W x ${specs/height}" H</span>`;
+    }
+    else{
+        return '';
+    }
 }
 
 function populateAdditionalInfo(info){
