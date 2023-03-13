@@ -21,11 +21,12 @@ body {
     display: inline;
 }
 
-.pac-item, .pac-item-query {
+.pac-item,
+.pac-item-query {
     color: #adb5bd;
 }
 
-.pac-item:hover{
+.pac-item:hover {
     background-color: #5f6a74;
 }
 
@@ -34,7 +35,7 @@ body {
     z-index: 1050;
 }
 
-.filter-button{
+.filter-button {
     position: fixed;
     left: 3%;
     top: 5%;
@@ -45,4 +46,16 @@ body {
 
 #spinner {
     z-index: 999;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    background: #4a525b;
+}
+
+input[type=range]::-moz-range-track {
+    background: #4a525b;
+}
+
+input[type=range]::-ms-track {
+    background: #4a525b;
 }
