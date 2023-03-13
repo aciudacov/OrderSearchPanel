@@ -112,11 +112,12 @@ function getPlaceType(placeObj) {
 }
 
 function createLocation() {
+    let placeType = getPlaceType(place);
     let item = document.createElement('div');
     item.classList.add('input-group');
     let state = document.getElementById('locationInput').value;
     item.innerHTML = '<button class="btn btn-outline-secondary" type="button" onclick="switchLocationType(this)">PU</button>'
-        + '<input disabled type="text" class="form-control" data-scope="pickup" data-type="' + getPlaceType(place) + '" data-place="' + place.place_id + '" value="' + state + '">'
+        + '<input disabled type="text" class="form-control" data-scope="pickup" data-type="' + placeType + '" data-place="' + place.place_id + '" value="' + state + '">'
         + '<button class="btn btn-outline-secondary" type="button" onclick="removeLocation(this)">Remove</button>';
     return item;
 }
