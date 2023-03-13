@@ -15,6 +15,14 @@ window.onload = (_event) => {
     addEventListenerToShipWithinRange();
 };
 
+//tooltip init
+const miwe = new bootstrap.Tooltip(document.getElementById('miwe'));
+const noea = new bootstrap.Tooltip(document.getElementById('noea'));
+const nowe = new bootstrap.Tooltip(document.getElementById('nowe'));
+const sout = new bootstrap.Tooltip(document.getElementById('sout'));
+const soea = new bootstrap.Tooltip(document.getElementById('soea'));
+const sowe = new bootstrap.Tooltip(document.getElementById('sowe'));
+
 const bsOffcanvas = new bootstrap.Offcanvas('#searchFilters');
 
 function addEventListenerToAddButton() {
@@ -186,10 +194,11 @@ async function sendPayload() {
     try
     {
         await postData(apiUrl, payload).then((data) => {
+            console.log(data);
             spinner.classList.add('d-none');
             if (data.count != 0)
             {
-                PopulateResults(data);
+                populateResults(data);
             }
             else
             {
@@ -218,9 +227,8 @@ function addVehicleStatusBadge(state){
 function getDateFromUtc(datetime){
     if (datetime)
     {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
         var date = new Date(datetime);
-        return date.toLocaleDateString(undefined, options);
+        return date.toLocaleDateString("en-US");
     }
     else
     {
@@ -232,7 +240,7 @@ function populateVehiclesModal(vehicles){
     var resultList = '';
     vehicles.forEach(veh =>{
         resultList += `<ul class="list-group">
-                            <li class="list-group-item">${veh.make} ${veh.model}</li>
+                            <li class="list-group-item">${veh.make} ${veh.model} ${veh.year}</li>
                             <li class="list-group-item">Dimensions: Unspecified</li>
                             <li class="list-group-item">Weight: Unspecified</li>
                         </ul>`;
@@ -240,13 +248,47 @@ function populateVehiclesModal(vehicles){
     return resultList;
 }
 
-function PopulateResults(responseObj) {
+function populateAdditionalInfo(info){
+    if (info){
+        return `<li class="list-group-item">Additional info: ${info}</li>`;
+    }
+    else{
+        return '';   
+    }
+}
+
+function populateOrderId(orderId){
+    if (orderId){
+        return `<li class="list-group-item"><h6 class="fw-bold">Order ID: ${orderId}</h6></li>`;
+    }
+    else{
+        return '';   
+    }
+}
+
+function populateResults(responseObj) {
     let resultsContainer = document.getElementById('resultsContainer');
     resultsContainer.innerHTML = '';
     responseObj.items.forEach(el => {
         let item = document.createElement('div');
         item.classList.add('card', 'mt-2', 'mb-2');
         item.innerHTML = `<div class="card-body row">
+                <div class="col-sm">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h5 class="fw-bold">$${el.Price.total}</h5>
+                            <span>${el.distance}mi</span>/<span>$${(el.Price.total / el.distance).toFixed(2)} per mile</span>
+                        </li>
+                        <li class="list-group-item">
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                data-bs-target="#modal${el.id}">
+                                <i class="bi bi-info-circle"></i>
+                            </button>
+                            Vehicles: ${el.vehicles.length} ${addVehicleStatusBadge(el.hasInOpVehicle)}
+                        </li>
+                        <li class="list-group-item">Trailer type: ${el.trailerType}</li>
+                    </ul>
+                </div>
                 <div class="col-sm">
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -265,22 +307,7 @@ function PopulateResults(responseObj) {
                             <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=Newland,%20NC,%2028657&destination=Windsor,%20CA,%2095492"
                                 class="btn btn-primary btn-sm" target="_blank">View route</a>
                         </li>
-                        <li class="list-group-item">Additional info: ${el.additionalInfo}</li>
-                    </ul>
-                </div>
-                <div class="col-sm">
-                    <ul class="list-group">
-                        <li class="list-group-item">Total: $${el.Price.total}</li>
-                        <li class="list-group-item">Per mile: $${(el.Price.total / el.distance).toFixed(2)}</li>
-                        <li class="list-group-item">Miles: ${el.distance}mi</li>
-                        <li class="list-group-item">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                data-bs-target="#modal${el.id}">
-                                <i class="bi bi-info-circle"></i>
-                            </button>
-                            Vehicles: ${el.vehicles.length} ${addVehicleStatusBadge(el.hasInOpVehicle)}
-                        </li>
-                        <li class="list-group-item">Trailer type: ${el.trailerType}</li>
+                        ${populateAdditionalInfo(el.additionalInfo)}
                     </ul>
                 </div>
                 <!-- Modal -->
@@ -312,11 +339,11 @@ function PopulateResults(responseObj) {
                 </div>
                 <div class="col-sm p-1">
                     <ul class="list-group">
-                        <li class="list-group-item">Posted at: ${getDateFromUtc(el.createdDate)}</li>
-                        <li class="list-group-item">Ship at: ${getDateFromUtc(el.availableDate)}</li>
-                        <li class="list-group-item">Desired: ${getDateFromUtc(el.desiredDeliveryDate)}</li>
-                        <li class="list-group-item">Expire: ${getDateFromUtc(el.expirationDate)}</li>
-                        <li class="list-group-item">Order ID: ${el.shipperOrderId}</li>
+                        <li class="list-group-item">Posted: ${getDateFromUtc(el.createdDate)}</li>
+                        <li class="list-group-item">Pick up: ${getDateFromUtc(el.availableDate)}</li>
+                        <li class="list-group-item">Preferred delivery: ${getDateFromUtc(el.desiredDeliveryDate)}</li>
+                        <li class="list-group-item">Expires: ${getDateFromUtc(el.expirationDate)}</li>
+                        ${populateOrderId(el.shipperOrderId)}
                     </ul>
                 </div>
             </div>`;
