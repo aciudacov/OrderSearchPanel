@@ -338,7 +338,7 @@ function populateResults(responseObj) {
                         <li class="list-group-item">${el.shipper.hoursOfOperation}</li>
                     </ul>
                 </div>
-                <div class="col-sm p-1">
+                <div class="col-sm">
                     <ul class="list-group">
                         <li class="list-group-item">Posted: ${getDateFromUtc(el.createdDate)}</li>
                         <li class="list-group-item">Pick up: ${getPickupDate(el.createdDate, el.availableDate)}</li>
