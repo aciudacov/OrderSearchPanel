@@ -184,7 +184,7 @@ function showFilters(){
     bsOffcanvas.show();
 }
 
-const apiUrl = "https://2527-105-66-3-14.eu.ngrok.io/platform/search";
+const apiUrl = "https://38be-155-133-23-239.eu.ngrok.io/platform/search";
 async function sendPayload() {
     bsOffcanvas.hide();
     let payload = getPayloadData();
