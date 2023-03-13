@@ -1,10 +1,10 @@
 window.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        var html = document.getElementsByTagName('html');
+        let html = document.getElementsByTagName('html');
         html[0].setAttribute('data-bs-theme', 'dark');
     }
     else {
-        var html = document.getElementsByTagName('html');
+        let html = document.getElementsByTagName('html');
         html[0].setAttribute('data-bs-theme', 'light');
     }
 });
@@ -26,13 +26,13 @@ const sowe = new bootstrap.Tooltip(document.getElementById('sowe'));
 const bsOffcanvas = new bootstrap.Offcanvas('#searchFilters');
 
 function addEventListenerToAddButton() {
-    var button = document.getElementById('addLocationButton');
+    let button = document.getElementById('addLocationButton');
     button.addEventListener("click", function () {
-        var input = document.getElementById('locationInput');
+        let input = document.getElementById('locationInput');
         if (input.value != '') {
             if (checkCountry(place)) {
-                var locationsDiv = document.getElementById('locations');
-                var cityElement = createLocation();
+                let locationsDiv = document.getElementById('locations');
+                let cityElement = createLocation();
                 locationsDiv.appendChild(cityElement);
                 input.value = "";
             }
@@ -69,8 +69,8 @@ function getPayloadData() {
 }
 
 function addEventListenerToShipWithinRange() {
-    var input = document.getElementById('readyToShip');
-    var text = document.getElementById('readyToShipText');
+    let input = document.getElementById('readyToShip');
+    let text = document.getElementById('readyToShipText');
     input.addEventListener("input", function () {
         if (input.value == -1) {
             text.innerHTML = 'any time';
@@ -85,8 +85,8 @@ function addEventListenerToShipWithinRange() {
 }
 
 function addEventListenerToPostRange() {
-    var input = document.getElementById('postRange');
-    var text = document.getElementById('postRangeText');
+    let input = document.getElementById('postRange');
+    let text = document.getElementById('postRangeText');
     input.addEventListener("input", function () {
         if (input.value == 0) {
             text.innerHTML = 'all time';
@@ -112,9 +112,9 @@ function getPlaceType(placeObj) {
 }
 
 function createLocation() {
-    var item = document.createElement('div');
+    let item = document.createElement('div');
     item.classList.add('input-group');
-    var state = document.getElementById('locationInput').value;
+    let state = document.getElementById('locationInput').value;
     item.innerHTML = '<button class="btn btn-outline-secondary" type="button" onclick="switchLocationType(this)">PU</button>'
         + '<input disabled type="text" class="form-control" data-scope="pickup" data-type="' + getPlaceType(place) + '" data-place="' + place.place_id + '" value="' + state + '">'
         + '<button class="btn btn-outline-secondary" type="button" onclick="removeLocation(this)">Remove</button>';
@@ -122,13 +122,13 @@ function createLocation() {
 }
 
 function createRegion(option) {
-    var locationsDiv = document.getElementById('locations');
-    var item = document.createElement('div');
+    let locationsDiv = document.getElementById('locations');
+    let item = document.createElement('div');
     item.classList.add('input-group');
     item.innerHTML = '<button class="btn btn-outline-secondary" type="button" onclick="switchLocationType(this)">PU</button>'
         + '<input disabled type="text" class="form-control" data-scope="pickup" data-type="region" value="' + option.innerHTML + '">'
         + '<button class="btn btn-outline-secondary" type="button" onclick="removeLocation(this)">Remove</button>';
-    var region = item;
+    let region = item;
     locationsDiv.appendChild(region);
 }
 
@@ -153,7 +153,7 @@ if (localStorage.getItem('token') == null) {
 }
 
 function saveToken() {
-    var token = document.getElementById('tokenInput');
+    let token = document.getElementById('tokenInput');
     if (token.value != '') {
         localStorage.setItem('token', token.value)
     }
@@ -227,7 +227,7 @@ function addVehicleStatusBadge(state){
 function getDateFromUtc(datetime){
     if (datetime)
     {
-        var date = new Date(datetime);
+        const date = new Date(datetime);
         return date.toLocaleDateString("en-US");
     }
     else
@@ -236,8 +236,21 @@ function getDateFromUtc(datetime){
     }
 }
 
+function getPickupDate(postedDate, pickupDate){
+    const posted = new Date(postedDate);
+    const pickup = new Date(pickupDate);
+    posted.setHours(0, 0, 0, 0);
+    pickup.setHours(0, 0, 0, 0);
+    if (posted - pickup == 0 || pickup - posted < 0){
+        return 'ASAP';
+    }
+    else{
+        return pickup.toLocaleDateString("en-US");
+    }
+}
+
 function populateVehiclesModal(vehicles){
-    var resultList = '';
+    let resultList = '';
     vehicles.forEach(veh =>{
         resultList += `<ul class="list-group">
                             <li class="list-group-item">${veh.make} ${veh.model} ${veh.year}</li>
@@ -304,29 +317,10 @@ function populateResults(responseObj) {
                             <span>${el.destination.city}, ${el.destination.state}, ${el.destination.zip}</span>
                         </li>
                         <li class="list-group-item">
-                            <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=Newland,%20NC,%2028657&destination=Windsor,%20CA,%2095492"
-                                class="btn btn-primary btn-sm" target="_blank">View route</a>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#mapModal${el.id}" target="_blank">View route</button>
                         </li>
                         ${populateAdditionalInfo(el.additionalInfo)}
                     </ul>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="modal${el.id}" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" >Vehicle(s) info</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                ${populateVehiclesModal(el.vehicles)}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-sm">
                     <ul class="list-group">
@@ -340,11 +334,46 @@ function populateResults(responseObj) {
                 <div class="col-sm p-1">
                     <ul class="list-group">
                         <li class="list-group-item">Posted: ${getDateFromUtc(el.createdDate)}</li>
-                        <li class="list-group-item">Pick up: ${getDateFromUtc(el.availableDate)}</li>
+                        <li class="list-group-item">Pick up: ${getPickupDate(el.createdDate, el.availableDate)}</li>
                         <li class="list-group-item">Preferred delivery: ${getDateFromUtc(el.desiredDeliveryDate)}</li>
                         <li class="list-group-item">Expires: ${getDateFromUtc(el.expirationDate)}</li>
                         ${populateOrderId(el.shipperOrderId)}
                     </ul>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="modal${el.id}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Vehicle(s) info</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ${populateVehiclesModal(el.vehicles)}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade modal-lg" id="mapModal${el.id}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Route on map</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe width="100%" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCKsYTgi8DCDNpplXRcWfp5tLI4GBcHaRg&origin=${el.origin.geoCode.latitude},${el.origin.geoCode.longitude}&destination=${el.destination.geoCode.latitude},${el.destination.geoCode.longitude}&mode=driving" width="600" height="450" style="border:0" loading="lazy" allowfullscreen></iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>`;
         resultsContainer.appendChild(item);
