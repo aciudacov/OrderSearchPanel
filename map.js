@@ -12,6 +12,12 @@ function initMap() {
     const autocomplete = new google.maps.places.Autocomplete(input, options);
     autocomplete.addListener("place_changed", () => {
         place = autocomplete.getPlace();
+        if (getPlaceType(place) == 'city'){
+            document.getElementById('milesRangeSearch').classList.remove('d-none');
+        }
+        else{
+            document.getElementById('milesRangeSearch').classList.add('d-none');
+        }
     });
 }
 

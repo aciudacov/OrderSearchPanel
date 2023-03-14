@@ -13,6 +13,7 @@ window.onload = (_event) => {
     addEventListenerToAddButton();
     addEventListenerToPostRange();
     addEventListenerToShipWithinRange();
+    addEventListenerToMilesSearchRange();
 };
 
 //tooltip init
@@ -34,6 +35,7 @@ function addEventListenerToAddButton() {
                 let locationsDiv = document.getElementById('locations');
                 let cityElement = createLocation();
                 locationsDiv.appendChild(cityElement);
+                document.getElementById('milesRangeSearch').classList.add('d-none');
                 input.value = "";
             }
             else {
@@ -43,29 +45,6 @@ function addEventListenerToAddButton() {
             }
         }
     });
-}
-
-function getPayloadData() {
-    let locations = Array.from(document.querySelectorAll('#locations input')).map(loc => ({
-        name: loc.getAttribute('data-name'),
-        id: loc.getAttribute('data-place'),
-        type: loc.getAttribute('data-type'),
-        scope: loc.getAttribute('data-scope'),
-    }));
-    let postRange = document.getElementById('postRange').value;
-    let vehicleTypes = Array.from(document.querySelectorAll('#vehicleTypesDropdown input:checked')).map(c => c.value);
-    let trailerType = document.getElementById('trailerType').value;
-    let vehicleStatus = document.getElementById('vehicleStatus').value;
-    let minVehicles = document.getElementById('minVehicles').value;
-    let maxVehicles = document.getElementById('maxVehicles').value;
-    let readyToShip = document.getElementById('readyToShip').value;
-    let paymentType = document.getElementById('paymentType').value;
-    let minTotal = document.getElementById('minTotal').value;
-    let minPpm = document.getElementById('minPpm').value;
-    let token = localStorage.getItem('token');
-    return {
-        token, locations, postRange, vehicleTypes, trailerType, vehicleStatus, minVehicles, maxVehicles, readyToShip, paymentType, minTotal, minPpm
-    }
 }
 
 function addEventListenerToShipWithinRange() {
@@ -97,6 +76,14 @@ function addEventListenerToPostRange() {
     });
 }
 
+function addEventListenerToMilesSearchRange() {
+    let input = document.getElementById('searchRange');
+    let text = document.getElementById('searchRangeText');
+    input.addEventListener("input", function () {
+        text.innerHTML = input.value + 'mi';
+    });
+}
+
 function checkCountry(placeObj) {
     let country = placeObj.address_components.find(a => a.types.includes('country')).short_name;
     return country == 'US';
@@ -111,26 +98,82 @@ function getPlaceType(placeObj) {
     }
 }
 
-function createLocation() {
-    let placeType = getPlaceType(place);
-    let item = document.createElement('div');
-    item.classList.add('input-group');
-    let state = document.getElementById('locationInput').value;
-    item.innerHTML = '<button class="btn btn-outline-secondary" type="button" onclick="switchLocationType(this)">PU</button>'
-        + '<input disabled type="text" class="form-control" data-scope="pickup" data-type="' + placeType + '" data-place="' + place.place_id + '" value="' + state + '">'
-        + '<button class="btn btn-outline-secondary" type="button" onclick="removeLocation(this)">Remove</button>';
-    return item;
+function getPayloadData() {
+    let locations = Array.from(document.querySelectorAll('#locations input')).map(loc => ({
+        name: loc.getAttribute('data-name'),
+        id: loc.getAttribute('data-id'),
+        type: loc.getAttribute('data-type'),
+        scope: loc.getAttribute('data-scope'),
+        range: loc.getAttribute('data-range'),
+        state: loc.getAttribute('data-state')
+    }));
+    let postRange = document.getElementById('postRange').value;
+    let vehicleTypes = Array.from(document.querySelectorAll('#vehicleTypesDropdown input:checked')).map(c => c.value);
+    let trailerType = document.getElementById('trailerType').value;
+    let vehicleStatus = document.getElementById('vehicleStatus').value;
+    let minVehicles = document.getElementById('minVehicles').value;
+    let maxVehicles = document.getElementById('maxVehicles').value;
+    let readyToShip = document.getElementById('readyToShip').value;
+    let paymentType = document.getElementById('paymentType').value;
+    let minTotal = document.getElementById('minTotal').value;
+    let minPpm = document.getElementById('minPpm').value;
+    let token = localStorage.getItem('token');
+    return {
+        token, locations, postRange, vehicleTypes, trailerType, vehicleStatus, minVehicles, maxVehicles, readyToShip, paymentType, minTotal, minPpm
+    }
 }
 
 function createRegion(option) {
     let locationsDiv = document.getElementById('locations');
     let item = document.createElement('div');
     item.classList.add('input-group');
-    item.innerHTML = '<button class="btn btn-outline-secondary" type="button" onclick="switchLocationType(this)">PU</button>'
-        + '<input disabled type="text" class="form-control" data-scope="pickup" data-type="region" value="' + option.innerHTML + '">'
-        + '<button class="btn btn-outline-secondary" type="button" onclick="removeLocation(this)">Remove</button>';
+    item.innerHTML = `<button class="btn btn-outline-secondary" type="button" onclick="switchLocationType(this)">PU</button>
+                    <input disabled type="text" class="form-control" data-name="${option.innerHTML} data-type="region" data-scope="Pickup" data-range="0" data-state=${option.value} value="${option.innerHTML}">
+                    <button class="btn btn-outline-secondary" type="button" onclick="removeLocation(this)">Remove</button>`;
     let region = item;
     locationsDiv.appendChild(region);
+}
+
+function createLocation() {
+    let placeType = getPlaceType(place);
+    let item = document.createElement('div');
+    item.classList.add('input-group');
+    let locationName = document.getElementById('locationInput').value;
+    item.innerHTML = `<button class="btn btn-outline-secondary" type="button" onclick="switchLocationType(this)">PU</button>
+                    <input disabled type="text" class="form-control" data-name="${getNameAttr(place)}" data-id="${place.place_id}" data-type="${placeType}" data-scope="Pickup" data-range="${getRangeAttr(placeType)}" data-state="${getStateAttr(place)}" value="${locationName + (placeType == 'city' && getRangeAttr(placeType) != 0 ? `, ${getRangeAttr(placeType)}mi` : '')}">
+                    <button class="btn btn-outline-secondary" type="button" onclick="removeLocation(this)">Remove</button>`;
+    return item;
+}
+
+function getRangeAttr(locType){
+    if (locType == 'city'){
+        return document.getElementById('searchRange').value;
+    }
+    else{
+        return 0;
+    }
+}
+
+function getStateAttr(loc){
+    let placeType = getPlaceType(loc);
+    if (placeType == 'city')
+    {
+        return loc.address_components.find(a => a.types.includes('administrative_area_level_1')).short_name;
+    }
+    else{
+        return '';
+    }
+}
+
+function getNameAttr(loc){
+    let placeType = getPlaceType(loc);
+    if (placeType == 'city')
+    {
+        return loc.address_components.find(a => a.types.includes('locality')).short_name;
+    }
+    else{
+        return loc.address_components.find(a => a.types.includes('administrative_area_level_1')).short_name;
+    }
 }
 
 function removeLocation(button) {
@@ -139,11 +182,11 @@ function removeLocation(button) {
 
 function switchLocationType(button) {
     if (button.innerHTML == 'PU') {
-        button.nextSibling.setAttribute('data-scope', 'delivery');
+        button.nextElementSibling.setAttribute('data-scope', 'Dropoff');
         button.innerHTML = 'DEL';
     }
     else {
-        button.nextSibling.setAttribute('data-scope', 'pickup');
+        button.nextElementSibling.setAttribute('data-scope', 'Pickup');
         button.innerHTML = 'PU';
     }
 }
