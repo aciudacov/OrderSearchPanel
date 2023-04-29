@@ -7,6 +7,7 @@ function initMap() {
         strictBounds: false,
         language: "en",
         types: ["(regions)"],
+        componentRestrictions: {country: "us"}
     };
 
     const autocomplete = new google.maps.places.Autocomplete(input, options);
