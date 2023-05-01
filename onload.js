@@ -128,7 +128,7 @@ function createRegion(option) {
     let item = document.createElement('div');
     item.classList.add('input-group');
     item.innerHTML = `<button class="btn btn-outline-secondary" type="button" onclick="switchLocationType(this)">PU</button>
-                    <input disabled type="text" class="form-control" data-name="${option.innerHTML} data-type="region" data-scope="Pickup" data-range="0" data-state=${option.value} value="${option.innerHTML}">
+                    <input disabled type="text" class="form-control" data-name="${option.innerHTML}" data-type="region" data-scope="Pickup" data-range="0" data-state=${option.value} value="${option.innerHTML}">
                     <button class="btn btn-outline-secondary" type="button" onclick="removeLocation(this)">Remove</button>`;
     let region = item;
     locationsDiv.appendChild(region);
