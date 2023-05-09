@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Search for orders</title>
     <link href="./styles.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -20,6 +17,7 @@
     <script src="./map.js"></script>
     <button class="btn btn-primary filter-button" type="button" onclick="showFilters()"><i
             class="bi bi-funnel"></i></button>
+    <button class="btn btn-secondary refresh-button" type="button" onclick="sendPayload()"><i class="bi bi-arrow-clockwise"></i></button>
     <div class="position-fixed top-50 start-50 transform-middle d-none" id="spinner">
         <div class="spinner-border text-primary" role="status">
         </div>
@@ -31,20 +29,17 @@
                 <div class="col-sm">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="https://www.google.com/maps?q=36.026391,-81.933475&ll=36.026391,-81.933475&z=10"
-                                class="btn btn-secondary btn-sm" target="_blank"><i class="bi bi-geo-alt"></i></a>
+                            <a href="https://www.google.com/maps?q=36.026391,-81.933475&ll=36.026391,-81.933475&z=10" class="btn btn-secondary btn-sm" target="_blank"><i class="bi bi-geo-alt"></i></a>
                             <span>Pickup:</span>
                             <span>NC, Newland, 28657</span>
                         </li>
                         <li class="list-group-item">
-                            <a href="https://www.google.com/maps?q=38.54388,-122.810608&ll=38.54388,-122.810608&z=10"
-                                class="btn btn-secondary btn-sm" target="_blank"><i class="bi bi-geo-alt"></i></a>
+                            <a href="https://www.google.com/maps?q=38.54388,-122.810608&ll=38.54388,-122.810608&z=10" class="btn btn-secondary btn-sm" target="_blank"><i class="bi bi-geo-alt"></i></a>
                             <span>Delivery:</span>
                             <span>CA, Windsor, 95492</span>
                         </li>
                         <li class="list-group-item">
-                            <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=Newland,%20NC,%2028657&destination=Windsor,%20CA,%2095492"
-                                class="btn btn-primary btn-sm" target="_blank">View route</a>
+                            <a href="https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=Newland,%20NC,%2028657&destination=Windsor,%20CA,%2095492" class="btn btn-primary btn-sm" target="_blank">View route</a>
                         </li>
                         <li class="list-group-item">Additional info: https://shipez.us/nvSPK</li>
                     </ul>
@@ -55,24 +50,20 @@
                         <li class="list-group-item">Per mile: $2.23</li>
                         <li class="list-group-item">Miles: 2689mi</li>
                         <li class="list-group-item">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="bi bi-info-circle"></i>
-                            </button>
-                            Vehicles: 1
+                            </button> Vehicles: 1
                         </li>
                         <li class="list-group-item">Trailer type: Open</li>
                     </ul>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Vehicle info</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <ul class="list-group">
@@ -80,9 +71,7 @@
                                     <li class="list-group-item">Dimensions: Unspecified</li>
                                     <li class="list-group-item">Weight: Unspecified</li>
                                 </ul>
-                                <iframe width="100%"
-                                    src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCKsYTgi8DCDNpplXRcWfp5tLI4GBcHaRg&origin=Oslo+Norway&destination=Telemark+Norway&mode=driving"
-                                    width="600" height="450" style="border:0" loading="lazy" allowfullscreen></iframe>
+                                <iframe width="100%" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCKsYTgi8DCDNpplXRcWfp5tLI4GBcHaRg&origin=Oslo+Norway&destination=Telemark+Norway&mode=driving" width="600" height="450" style="border:0" loading="lazy" allowfullscreen></iframe>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -111,8 +100,7 @@
             </div>
         </div>
     </div>
-    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="searchFilters"
-        aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="searchFilters" aria-labelledby="offcanvasWithBothOptionsLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Search filters</h5>
             <button type="button" class="btn btn-primary" onclick="sendPayload()">Apply</button>
@@ -135,19 +123,13 @@
                     Add a region
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip"
-                            data-bs-title="IA, IL, IN, KS, MI, MN, MO, ND, NE, OH, SD, WI" id="miwe">Midwest Plains</a>
+                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip" data-bs-title="IA, IL, IN, KS, MI, MN, MO, ND, NE, OH, SD, WI" id="miwe">Midwest Plains</a>
                     </li>
-                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip"
-                            data-bs-title="CT, DE, MA, ME, NH, NJ, NY, PA, RI, VT" id="noea">Northeast</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip"
-                            data-bs-title="ID, MT, OR, WA, WY" id="nowe">Northwest</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip"
-                            data-bs-title="AR, LA, MS, OK, TX" id="sout">South</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip"
-                            data-bs-title="AL, DC, FL, GA, KY, MD, NC, SC, TN, VA, WV" id="soea">Southeast</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip"
-                            data-bs-title="AZ, CA, CO, NM, NV, UT" id="sowe">Southwest</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip" data-bs-title="CT, DE, MA, ME, NH, NJ, NY, PA, RI, VT" id="noea">Northeast</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip" data-bs-title="ID, MT, OR, WA, WY" id="nowe">Northwest</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip" data-bs-title="AR, LA, MS, OK, TX" id="sout">South</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip" data-bs-title="AL, DC, FL, GA, KY, MD, NC, SC, TN, VA, WV" id="soea">Southeast</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="createRegion(this)" data-bs-toggle="tooltip" data-bs-title="AZ, CA, CO, NM, NV, UT" id="sowe">Southwest</a></li>
                 </ul>
             </div>
             <hr>
@@ -161,14 +143,11 @@
             <div class="accordion" id="accordionPanelsStayOpenExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#vehicleTypesDropdown" aria-expanded="false"
-                            aria-controls="vehicleTypesDropdown">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vehicleTypesDropdown" aria-expanded="false" aria-controls="vehicleTypesDropdown">
                             Vehicle types
                         </button>
                     </h2>
-                    <div id="vehicleTypesDropdown" class="accordion-collapse collapse"
-                        aria-labelledby="panelsStayOpen-headingOne">
+                    <div id="vehicleTypesDropdown" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
                         <div class="accordion-body text-start">
                             <div class="row row-cols-2">
                                 <div class="col">
@@ -184,8 +163,7 @@
                                     <label class="form-check-label" for="carCheck">Car</label>
                                 </div>
                                 <div class="col">
-                                    <input class="form-check-input" type="checkbox" id="heavyCheck"
-                                        value="Heavy_Equipment">
+                                    <input class="form-check-input" type="checkbox" id="heavyCheck" value="Heavy_Equipment">
                                     <label class="form-check-label" for="heavyCheck">Heavy
                                         equipment</label>
                                 </div>
@@ -194,8 +172,7 @@
                                     <label class="form-check-label" for="yachtCheck">Large yacht</label>
                                 </div>
                                 <div class="col">
-                                    <input class="form-check-input" type="checkbox" id="motorcycleCheck"
-                                        value="Motorcycle">
+                                    <input class="form-check-input" type="checkbox" id="motorcycleCheck" value="Motorcycle">
                                     <label class="form-check-label" for="motorcycleCheck">Motorcycle</label>
                                 </div>
                                 <div class="col">
@@ -211,8 +188,7 @@
                                     <label class="form-check-label" for="suvCheck">SUV</label>
                                 </div>
                                 <div class="col">
-                                    <input class="form-check-input" type="checkbox" id="trailerCheck"
-                                        value="Travel_Trailer">
+                                    <input class="form-check-input" type="checkbox" id="trailerCheck" value="Travel_Trailer">
                                     <label class="form-check-label" for="trailerCheck">Travel trailer</label>
                                 </div>
                                 <div class="col">
@@ -248,13 +224,11 @@
                 <label for="basic-url" class="form-label">Number of vehicles</label>
                 <div class="input-group">
                     <div class="form-floating">
-                    <input type="number" inputmode="numeric" min="1" max="10" class="form-control" placeholder="Min"
-                        aria-label="Min number of vehicles" id="minVehicles">
+                        <input type="number" inputmode="numeric" min="1" max="10" class="form-control" placeholder="Min" aria-label="Min number of vehicles" id="minVehicles">
                         <label for="minVehicles">Min vehicles</label>
                     </div>
                     <div class="form-floating">
-                    <input type="number" inputmode="numeric" min="1" max="10" class="form-control" placeholder="Max"
-                        aria-label="Max number of vehicles" id="maxVehicles">
+                        <input type="number" inputmode="numeric" min="1" max="10" class="form-control" placeholder="Max" aria-label="Max number of vehicles" id="maxVehicles">
                         <label for="maxVehicles">Max vehicles</label>
                     </div>
                 </div>
@@ -275,8 +249,7 @@
                 <label for="minTotal" class="form-label">Minimal total payment</label>
                 <div class="input-group">
                     <span class="input-group-text">$</span>
-                    <input type="number" inputmode="numeric" step="1" min="0" class="form-control text-center"
-                        aria-label="Amount (to the nearest dollar)" id="minTotal">
+                    <input type="number" inputmode="numeric" step="1" min="0" class="form-control text-center" aria-label="Amount (to the nearest dollar)" id="minTotal">
                     <span class="input-group-text">.00</span>
                 </div>
             </div>
@@ -285,8 +258,7 @@
                 <label for="minPpm" class="form-label">Minimal rate per vehicle per mile</label>
                 <div class="input-group">
                     <span class="input-group-text">$</span>
-                    <input type="number" inputmode="decimal" step="0.01" min="0" class="form-control text-center"
-                        aria-label="Amount (to the nearest dollar)" id="minPpm">
+                    <input type="number" inputmode="decimal" step="0.01" min="0" class="form-control text-center" aria-label="Amount (to the nearest dollar)" id="minPpm">
                 </div>
             </div>
         </div>
@@ -327,8 +299,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="emptyResultsModal" tabindex="-1" aria-labelledby="emptyResultsModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="emptyResultsModal" tabindex="-1" aria-labelledby="emptyResultsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -345,9 +316,7 @@
             </div>
         </div>
     </div>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKsYTgi8DCDNpplXRcWfp5tLI4GBcHaRg&region=US&language=en&callback=initMap&libraries=places&v=weekly"
-        defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKsYTgi8DCDNpplXRcWfp5tLI4GBcHaRg&region=US&language=en&callback=initMap&libraries=places&v=weekly" defer></script>
 </body>
 
 </html>
